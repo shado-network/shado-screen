@@ -17,7 +17,7 @@ type RootLayoutProps = Readonly<{
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="bg-neutral-950 dark">
       <body className={`antialiased`}>
         <Providers>{children}</Providers>
       </body>
