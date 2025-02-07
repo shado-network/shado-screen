@@ -1,4 +1,4 @@
-import Header from '@/ui/components/Header'
+import NavHeader from '@/ui/components/NavHeader'
 
 type AppLayoutProps = Readonly<{
   children: React.ReactNode
@@ -7,7 +7,7 @@ type AppLayoutProps = Readonly<{
 export default function AppLayout({ children }: AppLayoutProps) {
   return (
     <main>
-      <Header />
+      <NavHeader />
       {children}
     </main>
   )

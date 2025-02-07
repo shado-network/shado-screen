@@ -12,7 +12,7 @@ import {
 
 import conditionalClassNames from '@/libs/conditionalClassNames'
 
-export default function Header() {
+export default function NavHeader() {
   const pathName = usePathname()
 
   return (
