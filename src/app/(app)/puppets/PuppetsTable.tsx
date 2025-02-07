@@ -1,157 +1,133 @@
 'use client'
 
 import { useCallback } from 'react'
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-} from '@heroui/react'
-import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query'
-import { Chip, User } from '@heroui/react'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { Avatar, Chip } from '@heroui/react'
 import type { ChipProps } from '@heroui/react'
 
-import { getPuppetData } from './logic'
+import BaseTable from '@/ui/components/BaseTable'
 
-// NOTE: Stub data.
-// TODO: Replace with sqlite.
-import puppets from '@/data/stub/puppets.json'
+import { puppets } from './logic'
+import { getPuppetData, getPuppetHealth } from './logic'
+import type { PuppetBase } from './logic'
+import type { BaseTableColumn } from '@/ui/components/BaseTable'
 
-// TODO: Refactor!
-export type Puppet = { label: string; url: string }
-
-// TODO: Refactor!
-type PuppetData = {
-  id: string
-  name: string
-  image: string
-  url: string
-  //
-  status: 'online' | 'offline'
-}
-
-// TODO: Refactor!
-type Column = {
-  uid: string
-  name: string
-  align: 'start' | 'center' | 'end'
-}
-
-const columns: Column[] = [
+const columns: BaseTableColumn[] = [
   {
-    uid: 'puppet',
-    name: 'Puppet',
+    id: 'puppet',
+    label: 'Puppet',
     align: 'start',
   },
   {
-    uid: 'status',
-    name: 'Status',
+    id: 'status',
+    label: 'Status',
     align: 'end',
   },
 ]
 
 export default function PuppetsTable() {
+  const renderCell = useCallback((item: any, columnKey: string) => {
+    const cellValue = item[columnKey]
+
+    switch (columnKey) {
+      case 'puppet':
+        return <PuppetDataCell puppet={item} />
+      case 'status':
+        return <PuppetStatusCell puppet={item} />
+      default:
+        return cellValue
+    }
+  }, [])
+
+  return (
+    <BaseTable
+      rows={puppets}
+      columns={columns}
+      renderCell={renderCell}
+      //
+      ariaLabel="Shadō Puppets collection"
+      emptyContent="No shado-puppets to display."
+    />
+  )
+}
+
+//
+
+type PuppetDataCellProps = {
+  puppet: PuppetBase
+}
+
+function PuppetDataCell(props: PuppetDataCellProps) {
   const queries = {
-    puppets: useQueries({
-      queries: puppets.map((puppet) => ({
-        queryKey: ['puppet', puppet.label],
-        queryFn: () => getPuppetData(puppet),
-        enabled: true,
-        // placeholderData: keepPreviousData,
-      })),
+    puppetData: useQuery({
+      queryKey: ['puppet', props.puppet.identifier, 'data'],
+      queryFn: () => getPuppetData(props.puppet),
+      // enabled: true,
+      // placeholderData: keepPreviousData,
     }),
   }
 
-  const rows: PuppetData[] = []
-
-  queries.puppets.forEach((puppet) => {
-    if (puppet.data) {
-      rows.push({ ...puppet.data.data.puppet, status: 'online' })
-    } else {
-      // TODO: Add offline puppet.
-      rows.push({
-        id: '???',
-        name: '???',
-        image: '',
-        url: '',
-        status: 'offline',
-      })
-    }
-  })
-
-  // TODO: Refactor!
-  const renderCell = useCallback(
-    (puppet: PuppetData, columnKey: keyof PuppetData & 'puppet') => {
-      const cellValue = puppet[columnKey]
-
-      switch (columnKey) {
-        case 'puppet':
-          return (
-            <User
-              name={puppet.name}
-              description={puppet.url}
-              avatarProps={{ radius: 'full', src: puppet.image }}
-            >
-              {puppet.name}
-            </User>
-          )
-        case 'status':
-          const statusColorMap: {
-            [key: string]: ChipProps['color']
-          } = {
-            online: 'success',
-            offline: 'danger',
+  return (
+    <div className="flex gap-3">
+      <div>
+        <Avatar
+          name={
+            queries.puppetData.data?.data.puppet.name || props.puppet.identifier
           }
-
-          return (
-            <Chip
-              className="capitalize"
-              color={statusColorMap[puppet.status || 'offline']}
-              size="sm"
-              variant="flat"
-            >
-              {puppet.status || 'offline'}
-            </Chip>
-          )
-        default:
-          return cellValue
-      }
-    },
-    [],
+          src={queries.puppetData.data?.data.puppet.image}
+        />
+      </div>
+      <div className="flex flex-col">
+        <span className="text-md text-white">
+          {queries.puppetData.data?.data.puppet.name || props.puppet.identifier}
+        </span>
+        <span className="text-xs text-neutral-500">{props.puppet.url}</span>
+        {/* <span>{puppet.key}</span> */}
+      </div>
+    </div>
   )
+}
+
+//
+
+type PuppetStatusCellProps = {
+  puppet: PuppetBase
+}
+
+function PuppetStatusCell(props: PuppetStatusCellProps) {
+  const queries = {
+    puppetHealth: useQuery({
+      queryKey: ['puppet', props.puppet.identifier, 'health'],
+      queryFn: () => getPuppetHealth(props.puppet),
+      // enabled: true,
+      // placeholderData: keepPreviousData,
+      //
+      // NOTE: Check every minute.
+      refetchInterval: 1 * 60 * 1000,
+    }),
+  }
+
+  const statusColorMap: {
+    [key: string]: ChipProps['color']
+  } = {
+    online: 'success',
+    offline: 'danger',
+  }
+
+  // NOTE: Check if ping reply is more recent than 1 minute ago.
+  const puppetStatus =
+    queries.puppetHealth.data?.timestamp >= Date.now() - 1 * 60 * 1000
+      ? 'online'
+      : 'offline'
 
   return (
-    <Table
-      // removeWrapper
-      hideHeader
-      aria-label="Shadō Puppets collection"
+    <Chip
+      className="capitalize"
+      color={statusColorMap[puppetStatus || 'offline']}
+      size="sm"
+      variant="flat"
     >
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.align ? column.align : 'start'}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody
-        items={rows as PuppetData[]}
-        emptyContent={'No shado-puppets to display.'}
-      >
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>
-                {renderCell(item, columnKey as keyof PuppetData & 'puppet')}
-              </TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+      {puppetStatus || 'offline'}
+    </Chip>
   )
 }

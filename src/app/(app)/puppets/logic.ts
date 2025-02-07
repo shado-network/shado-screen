@@ -1,6 +1,22 @@
-import type { Puppet } from './PuppetsTable'
+// NOTE: Stub data.
+// TODO: Replace with sqlite.
+import puppets from '@/data/stub/puppets.json'
+export { puppets }
 
-export const getPuppetHealth = async (puppet: Puppet) => {
+// TODO: Refactor?!
+export type PuppetBase = { identifier: string; url: string; key: string }
+
+// // TODO: Refactor?!
+// type PuppetData = {
+//   id: string
+//   name: string
+//   image: string
+//   url: string
+//   //
+//   status: 'online' | 'offline'
+// }
+
+export const getPuppetHealth = async (puppet: PuppetBase) => {
   try {
     const url = `${puppet.url}/ping`
 
@@ -30,7 +46,7 @@ export const getPuppetHealth = async (puppet: Puppet) => {
   }
 }
 
-export const getPuppetData = async (puppet: Puppet) => {
+export const getPuppetData = async (puppet: PuppetBase) => {
   try {
     const url = `${puppet.url}/puppet`
 
