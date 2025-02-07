@@ -7,15 +7,15 @@ import type { ChipProps } from '@heroui/react'
 
 import BaseTable from '@/ui/components/BaseTable'
 
-import { puppets } from './logic'
-import { getPuppetData, getPuppetHealth } from './logic'
-import type { PuppetBase } from './logic'
+import { plays } from './logic'
+// import { getPlaysData, getPlaysHealth } from './logic'
+import type { PlayBase } from './logic'
 import type { BaseTableColumn } from '@/ui/components/BaseTable'
 
 const columns: BaseTableColumn[] = [
   {
-    id: 'puppet',
-    label: 'Puppet',
+    id: 'play',
+    label: 'Play',
     align: 'start',
   },
   {
@@ -25,15 +25,15 @@ const columns: BaseTableColumn[] = [
   },
 ]
 
-export default function PuppetsTable() {
+export default function PlaysTable() {
   const renderCell = useCallback((item: any, columnKey: string) => {
     const cellValue = item[columnKey]
 
     switch (columnKey) {
-      case 'puppet':
-        return <PuppetDataCell puppet={item} />
+      case 'play':
+        return <PlayDataCell play={item} />
       case 'status':
-        return <PuppetStatusCell puppet={item} />
+        return <PlayStatusCell play={item} />
       default:
         return cellValue
     }
@@ -41,27 +41,28 @@ export default function PuppetsTable() {
 
   return (
     <BaseTable
-      rows={puppets}
+      rows={plays}
       columns={columns}
       renderCell={renderCell}
       //
-      ariaLabel="Shadō Puppets collection"
-      emptyContent="No shado-puppets to display."
+      ariaLabel="Shadō Plays collection"
+      emptyContent="No shado-plays to display."
     />
   )
 }
 
 //
 
-type PuppetDataCellProps = {
-  puppet: PuppetBase
+type PlayDataCellProps = {
+  play: PlayBase
 }
 
-function PuppetDataCell(props: PuppetDataCellProps) {
+function PlayDataCell(props: PlayDataCellProps) {
   const queries = {
-    puppetData: useQuery({
-      queryKey: ['puppet', props.puppet.identifier, 'data'],
-      queryFn: () => getPuppetData(props.puppet),
+    playData: useQuery({
+      queryKey: ['play', props.play.identifier, 'data'],
+      // queryFn: () => getPlayData(props.play),
+      queryFn: () => ({}) as any,
       // enabled: true,
       // placeholderData: keepPreviousData,
     }),
@@ -71,20 +72,16 @@ function PuppetDataCell(props: PuppetDataCellProps) {
     <div className="flex gap-3">
       <div>
         <Avatar
-          name={
-            queries.puppetData.data?.data?.puppet.name ||
-            props.puppet.identifier
-          }
-          src={queries.puppetData.data?.data?.puppet.image}
+          name={queries.playData.data?.data?.play.name || props.play.identifier}
+          src={queries.playData.data?.data?.play.image}
         />
       </div>
       <div className="flex flex-col">
         <span className="text-md text-white">
-          {queries.puppetData.data?.data?.puppet.name ||
-            props.puppet.identifier}
+          {queries.playData.data?.data?.play.name || props.play.identifier}
         </span>
-        <span className="text-xs text-neutral-500">{props.puppet.url}</span>
-        {/* <span>{puppet.key}</span> */}
+        <span className="text-xs text-neutral-500">{props.play.url}</span>
+        {/* <span>{play.key}</span> */}
       </div>
     </div>
   )
@@ -92,15 +89,16 @@ function PuppetDataCell(props: PuppetDataCellProps) {
 
 //
 
-type PuppetStatusCellProps = {
-  puppet: PuppetBase
+type PlayStatusCellProps = {
+  play: PlayBase
 }
 
-function PuppetStatusCell(props: PuppetStatusCellProps) {
+function PlayStatusCell(props: PlayStatusCellProps) {
   const queries = {
-    puppetHealth: useQuery({
-      queryKey: ['puppet', props.puppet.identifier, 'health'],
-      queryFn: () => getPuppetHealth(props.puppet),
+    playHealth: useQuery({
+      queryKey: ['play', props.play.identifier, 'health'],
+      // queryFn: () => getPlayHealth(props.play),
+      queryFn: () => ({}) as any,
       // enabled: true,
       // placeholderData: keepPreviousData,
       //
@@ -117,19 +115,19 @@ function PuppetStatusCell(props: PuppetStatusCellProps) {
   }
 
   // NOTE: Check if ping reply is more recent than 1 minute ago.
-  const puppetStatus =
-    queries.puppetHealth.data?.timestamp >= Date.now() - 1 * 60 * 1000
+  const playStatus =
+    queries.playHealth.data?.timestamp >= Date.now() - 1 * 60 * 1000
       ? 'online'
       : 'offline'
 
   return (
     <Chip
       className="capitalize"
-      color={statusColorMap[puppetStatus || 'offline']}
+      color={statusColorMap[playStatus || 'offline']}
       size="sm"
       variant="flat"
     >
-      {puppetStatus || 'offline'}
+      {playStatus || 'offline'}
     </Chip>
   )
 }
