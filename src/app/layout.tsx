@@ -15,11 +15,11 @@ type RootLayoutProps = Readonly<{
   children: React.ReactNode
 }>
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="en" className="select-none bg-neutral-950 antialiased dark">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>{props.children}</Providers>
       </body>
     </html>
   )

@@ -19,14 +19,14 @@ type ProvidersProps = Readonly<{
   children: React.ReactNode
 }>
 
-export function Providers({ children }: ProvidersProps) {
+export function Providers(props: ProvidersProps) {
   const router = useRouter()
 
   return (
     <QueryClientProvider client={queryClient}>
       <HeroUIProvider navigate={router.push}>
         {/*  */}
-        {children}
+        {props.children}
         {/*  */}
       </HeroUIProvider>
       <ReactQueryDevtools initialIsOpen={false} />

@@ -4,11 +4,11 @@ type AppLayoutProps = Readonly<{
   children: React.ReactNode
 }>
 
-export default function AppLayout({ children }: AppLayoutProps) {
+export default function AppLayout(props: AppLayoutProps) {
   return (
     <main>
       <NavHeader />
-      {children}
+      {props.children}
     </main>
   )
 }
