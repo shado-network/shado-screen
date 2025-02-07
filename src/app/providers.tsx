@@ -1,7 +1,9 @@
 'use client'
 
-import { HeroUIProvider } from '@heroui/react'
 import { useRouter } from 'next/navigation'
+import { HeroUIProvider } from '@heroui/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // declare module '@react-types/shared' {
 //   interface RouterConfig {
@@ -11,6 +13,8 @@ import { useRouter } from 'next/navigation'
 //   }
 // }
 
+const queryClient = new QueryClient()
+
 type ProvidersProps = Readonly<{
   children: React.ReactNode
 }>
@@ -18,5 +22,14 @@ type ProvidersProps = Readonly<{
 export function Providers({ children }: ProvidersProps) {
   const router = useRouter()
 
-  return <HeroUIProvider navigate={router.push}>{children}</HeroUIProvider>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HeroUIProvider navigate={router.push}>
+        {/*  */}
+        {children}
+        {/*  */}
+      </HeroUIProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  )
 }

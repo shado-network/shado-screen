@@ -9,13 +9,20 @@ import {
   TableRow,
   TableCell,
 } from '@heroui/react'
+import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query'
 import { Chip, User } from '@heroui/react'
 import type { ChipProps } from '@heroui/react'
 
-// NOTE: Stub data.
-import puppets from '@/data/stub/puppets.json'
-import puppetUrls from '@/data/stub/puppetUrls.json'
+import { getPuppetData } from './logic'
 
+// NOTE: Stub data.
+// TODO: Replace with sqlite.
+import puppets from '@/data/stub/puppets.json'
+
+// TODO: Refactor!
+export type Puppet = { label: string; url: string }
+
+// TODO: Refactor!
 type PuppetData = {
   id: string
   name: string
@@ -25,8 +32,7 @@ type PuppetData = {
   status: 'online' | 'offline'
 }
 
-const rows = [...puppets]
-
+// TODO: Refactor!
 type Column = {
   uid: string
   name: string
@@ -47,6 +53,35 @@ const columns: Column[] = [
 ]
 
 export default function PuppetsTable() {
+  const queries = {
+    puppets: useQueries({
+      queries: puppets.map((puppet) => ({
+        queryKey: ['puppet', puppet.label],
+        queryFn: () => getPuppetData(puppet),
+        enabled: true,
+        // placeholderData: keepPreviousData,
+      })),
+    }),
+  }
+
+  const rows: PuppetData[] = []
+
+  queries.puppets.forEach((puppet) => {
+    if (puppet.data) {
+      rows.push({ ...puppet.data.data.puppet, status: 'online' })
+    } else {
+      // TODO: Add offline puppet.
+      rows.push({
+        id: '???',
+        name: '???',
+        image: '',
+        url: '',
+        status: 'offline',
+      })
+    }
+  })
+
+  // TODO: Refactor!
   const renderCell = useCallback(
     (puppet: PuppetData, columnKey: keyof PuppetData & 'puppet') => {
       const cellValue = puppet[columnKey]
