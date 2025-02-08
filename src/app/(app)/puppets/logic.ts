@@ -1,22 +1,25 @@
-// NOTE: Stub data.
-// TODO: Replace with sqlite.
-import puppets from '@/data/stub/puppets.json'
-export { puppets }
+'use server'
+
+import { Puppet } from '@/data/database/models'
+
+export const getPuppets = async () => {
+  try {
+    const puppetsData = await Puppet.findAll()
+    const puppets = puppetsData.map((puppetData) => {
+      return puppetData.toJSON()
+    })
+  
+    return puppets
+  } catch (error) {
+    console.log('Error in getPuppets', error)
+    return null
+  }
+}
 
 // TODO: Refactor?!
-export type PuppetBase = { identifier: string; url: string; key: string }
+export type PuppetDTO = { identifier: string; url: string; key: string }
 
-// // TODO: Refactor?!
-// type PuppetData = {
-//   id: string
-//   name: string
-//   image: string
-//   url: string
-//   //
-//   status: 'online' | 'offline'
-// }
-
-export const getPuppetHealth = async (puppet: PuppetBase) => {
+export const getPuppetHealth = async (puppet: PuppetDTO) => {
   try {
     const url = `${puppet.url}/ping`
 
@@ -46,7 +49,7 @@ export const getPuppetHealth = async (puppet: PuppetBase) => {
   }
 }
 
-export const getPuppetData = async (puppet: PuppetBase) => {
+export const getPuppetData = async (puppet: PuppetDTO) => {
   try {
     const url = `${puppet.url}/puppet`
 

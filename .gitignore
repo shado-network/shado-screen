@@ -48,3 +48,5 @@ next-env.d.ts
 _TMP/
 
 src/data/stub/*
+src/data/database/database.sqlite
+src/data/database/database.sqlite-journal

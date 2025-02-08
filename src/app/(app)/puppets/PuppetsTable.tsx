@@ -7,9 +7,8 @@ import type { ChipProps } from '@heroui/react'
 
 import BaseTable from '@/ui/components/BaseTable'
 
-import { puppets } from './logic'
-import { getPuppetData, getPuppetHealth } from './logic'
-import type { PuppetBase } from './logic'
+import { getPuppets, getPuppetData, getPuppetHealth } from './logic'
+import type { PuppetDTO } from './logic'
 import type { BaseTableColumn } from '@/ui/components/BaseTable'
 
 const columns: BaseTableColumn[] = [
@@ -26,6 +25,15 @@ const columns: BaseTableColumn[] = [
 ]
 
 export default function PuppetsTable() {
+  const queries = {
+    puppets: useQuery({
+      queryKey: ['puppets'],
+      queryFn: () => getPuppets(),
+      // enabled: true,
+      // placeholderData: keepPreviousData,
+    }),
+  }
+
   const renderCell = useCallback((item: any, columnKey: string) => {
     const cellValue = item[columnKey]
 
@@ -41,7 +49,7 @@ export default function PuppetsTable() {
 
   return (
     <BaseTable
-      rows={puppets}
+      rows={queries.puppets.data || []}
       columns={columns}
       renderCell={renderCell}
       //
@@ -54,7 +62,7 @@ export default function PuppetsTable() {
 //
 
 type PuppetDataCellProps = {
-  puppet: PuppetBase
+  puppet: PuppetDTO
 }
 
 function PuppetDataCell(props: PuppetDataCellProps) {
@@ -93,7 +101,7 @@ function PuppetDataCell(props: PuppetDataCellProps) {
 //
 
 type PuppetStatusCellProps = {
-  puppet: PuppetBase
+  puppet: PuppetDTO
 }
 
 function PuppetStatusCell(props: PuppetStatusCellProps) {

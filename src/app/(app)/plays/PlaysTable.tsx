@@ -7,9 +7,12 @@ import type { ChipProps } from '@heroui/react'
 
 import BaseTable from '@/ui/components/BaseTable'
 
-import { plays } from './logic'
-// import { getPlaysData, getPlaysHealth } from './logic'
-import type { PlayBase } from './logic'
+import {
+  getPlays,
+  // getPlaysData, 
+  // getPlaysHealth
+} from './logic'
+import type { PlayDTO } from './logic'
 import type { BaseTableColumn } from '@/ui/components/BaseTable'
 
 const columns: BaseTableColumn[] = [
@@ -26,6 +29,16 @@ const columns: BaseTableColumn[] = [
 ]
 
 export default function PlaysTable() {
+
+  const queries = {
+      plays: useQuery({
+        queryKey: ['plays'],
+        queryFn: () => getPlays(),
+        // enabled: true,
+        // placeholderData: keepPreviousData,
+      }),
+    }
+
   const renderCell = useCallback((item: any, columnKey: string) => {
     const cellValue = item[columnKey]
 
@@ -41,7 +54,7 @@ export default function PlaysTable() {
 
   return (
     <BaseTable
-      rows={plays}
+      rows={queries.plays.data || []}
       columns={columns}
       renderCell={renderCell}
       //
@@ -54,15 +67,15 @@ export default function PlaysTable() {
 //
 
 type PlayDataCellProps = {
-  play: PlayBase
+  play: PlayDTO
 }
 
 function PlayDataCell(props: PlayDataCellProps) {
   const queries = {
     playData: useQuery({
       queryKey: ['play', props.play.identifier, 'data'],
-      // queryFn: () => getPlayData(props.play),
       queryFn: () => ({}) as any,
+      // queryFn: () => getPlayData(props.play),
       // enabled: true,
       // placeholderData: keepPreviousData,
     }),
@@ -90,15 +103,15 @@ function PlayDataCell(props: PlayDataCellProps) {
 //
 
 type PlayStatusCellProps = {
-  play: PlayBase
+  play: PlayDTO
 }
 
 function PlayStatusCell(props: PlayStatusCellProps) {
   const queries = {
     playHealth: useQuery({
       queryKey: ['play', props.play.identifier, 'health'],
-      // queryFn: () => getPlayHealth(props.play),
       queryFn: () => ({}) as any,
+      // queryFn: () => getPlayHealth(props.play),
       // enabled: true,
       // placeholderData: keepPreviousData,
       //

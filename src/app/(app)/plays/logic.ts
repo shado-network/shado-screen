@@ -1,7 +1,20 @@
-// NOTE: Stub data.
-// TODO: Replace with sqlite.
-import plays from '@/data/stub/plays.json'
-export { plays }
+'use server'
+
+import { Play } from '@/data/database/models'
+
+export const getPlays = async () => {
+  try {
+    const playsData = await Play.findAll()
+    const plays = playsData.map((playData) => {
+      return playData.toJSON()
+    })
+  
+    return plays
+  } catch (error) {
+    console.log('Error in getPlays', error)
+    return null
+  }
+}
 
 // TODO: Refactor?!
-export type PlayBase = { identifier: string; url: string; key: string }
+export type PlayDTO = { identifier: string; url: string; key: string }
