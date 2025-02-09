@@ -15,6 +15,45 @@ export const getPlays = async () => {
     return plays
   } catch (error) {
     console.log('Error in getPlays', error)
+
+    // TODO: Proper return value.
     return null
   }
 }
+
+export type AddPlayConnectionDTO = PlayDTO
+
+export const addPlayConnection = async (data: AddPlayConnectionDTO) => {
+  try {
+    const play = await Play.create(data)
+
+    return play.toJSON()
+  } catch (error) {
+    console.log('Error in addPlayConnection', error)
+
+    // TODO: Proper return value.
+    return null
+  }
+}
+
+export type RemovePlayConnectionDTO = { identifier: string }
+
+export const removePlayConnection = async (data: RemovePlayConnectionDTO) => {
+  try {
+    await Play.destroy({
+      where: {
+        identifier: data.identifier,
+      },
+    })
+
+    // TODO: Proper return value.
+    return true
+  } catch (error) {
+    console.log('Error in removePlayConnection', error)
+
+    // TODO: Proper return value.
+    return null
+  }
+}
+
+//

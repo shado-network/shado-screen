@@ -24,7 +24,7 @@ export default function NavHeader() {
             <RiAppsLine />
           </div>
           <div className="flex flex-col">
-            <span className="text-shadow shadow-glow font-semibold uppercase leading-tight text-primary transition group-hover:text-white group-hover:shadow-white">
+            <span className="text-shadow shadow-glow group-hover:text-shadow-none font-semibold uppercase leading-tight text-primary transition group-hover:text-white group-hover:shadow-white">
               Shadō Screen
             </span>
             <span className="text-xs leading-tight text-neutral-500 transition group-hover:text-neutral-400">

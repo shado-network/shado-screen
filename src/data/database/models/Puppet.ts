@@ -29,7 +29,7 @@ const Puppet = db.define(
   },
   {
     // tableName: 'Puppets',
-    paranoid: true,
+    // paranoid: true,
   },
 )
 

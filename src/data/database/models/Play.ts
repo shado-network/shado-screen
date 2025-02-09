@@ -29,7 +29,7 @@ const Play = db.define(
   },
   {
     // tableName: 'Plays',
-    paranoid: true,
+    // paranoid: true,
   },
 )
 

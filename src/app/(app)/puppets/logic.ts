@@ -15,9 +15,50 @@ export const getPuppets = async () => {
     return puppets
   } catch (error) {
     console.log('Error in getPuppets', error)
+
+    // TODO: Proper return value.
     return null
   }
 }
+
+export type AddPuppetConnectionDTO = PuppetDTO
+
+export const addPuppetConnection = async (data: AddPuppetConnectionDTO) => {
+  try {
+    const puppet = await Puppet.create(data)
+
+    return puppet.toJSON()
+  } catch (error) {
+    console.log('Error in addPuppetConnection', error)
+
+    // TODO: Proper return value.
+    return null
+  }
+}
+
+export type RemovePuppetConnectionDTO = { identifier: string }
+
+export const removePuppetConnection = async (
+  data: RemovePuppetConnectionDTO,
+) => {
+  try {
+    await Puppet.destroy({
+      where: {
+        identifier: data.identifier,
+      },
+    })
+
+    // TODO: Proper return value.
+    return true
+  } catch (error) {
+    console.log('Error in removePuppetConnection', error)
+
+    // TODO: Proper return value.
+    return null
+  }
+}
+
+//
 
 export const getPuppetHealth = async (puppet: PuppetDTO) => {
   try {
@@ -45,6 +86,8 @@ export const getPuppetHealth = async (puppet: PuppetDTO) => {
     return result
   } catch (error) {
     console.log('Error in getPuppetHealth', error)
+
+    // TODO: Proper return value.
     return null
   }
 }
@@ -75,6 +118,8 @@ export const getPuppetData = async (puppet: PuppetDTO) => {
     return result
   } catch (error) {
     console.log('Error in getPuppetData', error)
+
+    // TODO: Proper return value.
     return null
   }
 }
