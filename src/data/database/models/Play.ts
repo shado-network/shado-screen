@@ -1,5 +1,8 @@
-import db from '../database'
 import { DataTypes } from 'sequelize'
+
+// @ts-ignore
+// NOTE: *.ts extension allows it to work with seed script.
+import db from '../database.ts'
 
 const Play = db.define(
   'Play',
