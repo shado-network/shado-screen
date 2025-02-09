@@ -2,22 +2,22 @@
 
 import { Puppet } from '@/data/database/models'
 
+// TODO: Refactor?!
+export type PuppetDTO = { identifier: string; url: string; key: string }
+
 export const getPuppets = async () => {
   try {
     const puppetsData = await Puppet.findAll()
     const puppets = puppetsData.map((puppetData) => {
       return puppetData.toJSON()
     })
-  
+
     return puppets
   } catch (error) {
     console.log('Error in getPuppets', error)
     return null
   }
 }
-
-// TODO: Refactor?!
-export type PuppetDTO = { identifier: string; url: string; key: string }
 
 export const getPuppetHealth = async (puppet: PuppetDTO) => {
   try {

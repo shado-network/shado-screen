@@ -9,7 +9,7 @@ import BaseTable from '@/ui/components/BaseTable'
 
 import {
   getPlays,
-  // getPlaysData, 
+  // getPlaysData,
   // getPlaysHealth
 } from './logic'
 import type { PlayDTO } from './logic'
@@ -29,15 +29,14 @@ const columns: BaseTableColumn[] = [
 ]
 
 export default function PlaysTable() {
-
   const queries = {
-      plays: useQuery({
-        queryKey: ['plays'],
-        queryFn: () => getPlays(),
-        // enabled: true,
-        // placeholderData: keepPreviousData,
-      }),
-    }
+    plays: useQuery({
+      queryKey: ['plays'],
+      queryFn: () => getPlays(),
+      // enabled: true,
+      // placeholderData: keepPreviousData,
+    }),
+  }
 
   const renderCell = useCallback((item: any, columnKey: string) => {
     const cellValue = item[columnKey]
@@ -93,7 +92,7 @@ function PlayDataCell(props: PlayDataCellProps) {
         <span className="text-md text-white">
           {queries.playData.data?.data?.play.name || props.play.identifier}
         </span>
-        <span className="text-xs text-neutral-500">{props.play.url}</span>
+        <span className="text-sm text-neutral-500">{props.play.url}</span>
         {/* <span>{play.key}</span> */}
       </div>
     </div>
@@ -135,7 +134,7 @@ function PlayStatusCell(props: PlayStatusCellProps) {
 
   return (
     <Chip
-      className="capitalize"
+      className="uppercase"
       color={statusColorMap[playStatus || 'offline']}
       size="sm"
       variant="flat"

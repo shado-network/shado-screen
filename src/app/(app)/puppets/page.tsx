@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Puppets() {
   return (
     <section className="container mx-auto p-12">
-      <h1 className="text-2xl font-semibold text-white">Puppets</h1>
+      <h1 className="text-xl font-semibold uppercase text-white">Puppets</h1>
       <p className="text-neutral-400">Your connected shado-puppets.</p>
 
       <Spacer y={6} />

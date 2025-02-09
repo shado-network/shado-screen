@@ -24,11 +24,11 @@ export default function NavHeader() {
             <RiAppsLine />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold leading-tight text-amber-400 transition group-hover:text-white">
+            <span className="text-shadow shadow-glow font-semibold uppercase leading-tight text-primary transition group-hover:text-white group-hover:shadow-white">
               Shadō Screen
             </span>
             <span className="text-xs leading-tight text-neutral-500 transition group-hover:text-neutral-400">
-              By Shadō Network
+              Shadō Network
             </span>
           </div>
         </Link>
@@ -40,8 +40,8 @@ export default function NavHeader() {
           href="/puppets"
           className={conditionalClassNames({
             'flex items-center gap-2': true,
-            'text-neutral-400 transition hover:text-white': true,
-            'text-amber-400': pathName === '/puppets',
+            'uppercase text-neutral-400 transition hover:text-white': true,
+            'text-primary': pathName === '/puppets',
           })}
         >
           <RiGroupLine title="Puppets" />
@@ -51,8 +51,8 @@ export default function NavHeader() {
           href="/plays"
           className={conditionalClassNames({
             'flex items-center gap-2': true,
-            'text-neutral-400 transition hover:text-white': true,
-            'text-amber-400': pathName === '/plays',
+            'uppercase text-neutral-400 transition hover:text-white': true,
+            'text-primary': pathName === '/plays',
           })}
         >
           <RiExchange2Line title="Plays" />
@@ -66,8 +66,8 @@ export default function NavHeader() {
           href="/settings"
           className={conditionalClassNames({
             'flex h-6 w-6 items-center justify-center': true,
-            'text-neutral-400 transition hover:text-white': true,
-            'text-amber-400': pathName === '/settings',
+            'uppercase text-neutral-400 transition hover:text-white': true,
+            'text-primary': pathName === '/settings',
           })}
         >
           <RiSettings3Line title="Settings" />

@@ -1,9 +1,9 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { HeroUIProvider } from '@heroui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { HeroUIProvider } from '@heroui/react'
 
 // declare module '@react-types/shared' {
 //   interface RouterConfig {

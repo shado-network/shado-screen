@@ -91,7 +91,7 @@ function PuppetDataCell(props: PuppetDataCellProps) {
           {queries.puppetData.data?.data?.puppet.name ||
             props.puppet.identifier}
         </span>
-        <span className="text-xs text-neutral-500">{props.puppet.url}</span>
+        <span className="text-sm text-neutral-500">{props.puppet.url}</span>
         {/* <span>{puppet.key}</span> */}
       </div>
     </div>
@@ -132,7 +132,7 @@ function PuppetStatusCell(props: PuppetStatusCellProps) {
 
   return (
     <Chip
-      className="capitalize"
+      className="uppercase"
       color={statusColorMap[puppetStatus || 'offline']}
       size="sm"
       variant="flat"
