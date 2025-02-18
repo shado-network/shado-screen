@@ -51,9 +51,9 @@ export default function PuppetDetailsHtnTab(props: PuppetDetailsHtnTabProps) {
   return (
     <>
       <HtnConnectionSection wsState={wsState} />
-      <HtnStateSection state={state} />
       <HtnGoalsSection goals={goals} />
       <HtnPlanSection plan={plan} />
+      <HtnStateSection state={state} />
       <HtnLogsSection logs={logs} />
     </>
   )
@@ -78,37 +78,8 @@ function HtnConnectionSection(props: HtnConnectionSectionProps) {
 
   return (
     <section className="mb-6 mt-6 flex items-center gap-1">
-      <span>Connection</span>
+      <span className="flex h-8 items-center">Connection</span>
       <StatusDot status={connectionState} />
-    </section>
-  )
-}
-type HtnStateSectionProps = {
-  state?: any
-}
-
-function HtnStateSection(props: HtnStateSectionProps) {
-  return (
-    <section className="mb-6">
-      <span>State</span>
-      <div className="flex gap-3">
-        <ul className="flex-1">
-          {Object.keys(props.state || {}).map((entry: any, index: number) => {
-            return (
-              <li
-                key={`state-entry-${index}`}
-                className="flex items-center gap-1"
-              >
-                <StatusDot status={'UNDETERMINED'} />
-                <span className="flex-1">{entry}</span>
-                <span className="flex-1">
-                  {JSON.stringify(props.state[entry])}
-                </span>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
     </section>
   )
 }
@@ -119,37 +90,54 @@ type HtnGoalsSectionProps = {
 
 function HtnGoalsSection(props: HtnGoalsSectionProps) {
   return (
-    <section className="mb-6">
-      <span>Goals</span>
-      <div className="flex gap-3">
-        <ul className="flex-1">
-          {props.goals?.reached?.map((goal: string, index: number) => {
-            return (
-              <li
-                key={`goal-reached-${index}`}
-                className="flex items-center gap-1"
-              >
-                <StatusDot status={'POSITIVE'} />
-                <span>{goal}</span>
-              </li>
-            )
-          })}
-        </ul>
-        <ul className="flex-1">
-          {props.goals?.unreached?.map((goal: string, index: number) => {
-            return (
-              <li
-                key={`goal-unreached-${index}`}
-                className="flex items-center gap-1"
-              >
-                <StatusDot status={'NEGATIVE'} />
-                <span>{goal}</span>
-              </li>
-            )
-          })}
+    <details
+      className="mb-6 border border-primary p-6 shadow-glow drop-shadow"
+      open={true}
+    >
+      <summary className="cursor-pointer uppercase text-primary shadow-glow text-shadow">
+        Goals
+      </summary>
+      <div className="mt-3 flex gap-3">
+        <ul>
+          {props.goals?.reached?.map(
+            (
+              goal: { identifier: string; description: string },
+              index: number,
+            ) => {
+              return (
+                <li key={`goal-reached-${index}`} className="mb-3 flex gap-1">
+                  <StatusDot status={'POSITIVE'} />
+                  <div className="flex flex-1 flex-col">
+                    <span className="flex h-8 items-center text-white">
+                      {goal.identifier}
+                    </span>
+                    <span className="text-neutral-400">{goal.description}</span>
+                  </div>
+                </li>
+              )
+            },
+          )}
+          {props.goals?.unreached?.map(
+            (
+              goal: { identifier: string; description: string },
+              index: number,
+            ) => {
+              return (
+                <li key={`goal-unreached-${index}`} className="mb-3 flex gap-1">
+                  <StatusDot status={'NEGATIVE'} />
+                  <div className="flex flex-1 flex-col">
+                    <span className="flex h-8 items-center text-white">
+                      {goal.identifier}
+                    </span>
+                    <span className="text-neutral-400">{goal.description}</span>
+                  </div>
+                </li>
+              )
+            },
+          )}
         </ul>
       </div>
-    </section>
+    </details>
   )
 }
 
@@ -159,27 +147,64 @@ type HtnPlanSectionProps = {
 
 function HtnPlanSection(props: HtnPlanSectionProps) {
   return (
-    <section className="mb-6">
-      <span>Plan</span>
-      <div className="flex gap-3">
+    <details
+      className="mb-6 border border-primary p-6 shadow-glow drop-shadow"
+      open={true}
+    >
+      <summary className="cursor-pointer uppercase text-primary shadow-glow text-shadow">
+        Plan
+      </summary>
+      <div className="mt-3 flex gap-3">
         <ul className="flex-1">
           {props.plan?.map((task: any, index: number) => {
             return (
-              <li
-                key={`plan-task-${index}`}
-                className="flex items-center gap-1"
-              >
+              <li key={`plan-task-${index}`} className="mb-3 flex gap-1">
                 <StatusDot status={'UNDETERMINED'} />
-                <span className="flex-1">
-                  {index + 1}: {task.identifier}
+                <span className="flex h-8 items-center">
+                  {`${index + 1}`.padStart(2, '0')}:
                 </span>
-                <span className="flex-1">{JSON.stringify(task.effects)}</span>
+                <div className="flex flex-1 flex-col">
+                  <span className="flex h-8 items-center text-white">
+                    {task.identifier}
+                  </span>
+                  <span className="text-neutral-400">{task.description}</span>
+                </div>
               </li>
             )
           })}
         </ul>
       </div>
-    </section>
+    </details>
+  )
+}
+
+type HtnStateSectionProps = {
+  state?: any
+}
+
+function HtnStateSection(props: HtnStateSectionProps) {
+  return (
+    <details className="mb-6 border border-neutral-400 p-6" open={true}>
+      <summary className="cursor-pointer uppercase text-white">State</summary>
+      <div className="mt-3 flex gap-3">
+        <ul className="flex-1">
+          {Object.keys(props.state || {}).map((entry: any, index: number) => {
+            return (
+              <li
+                key={`state-entry-${index}`}
+                className="flex items-center gap-1"
+              >
+                <StatusDot status={'UNDETERMINED'} />
+                <span className="flex h-8 flex-1 items-center">{entry}</span>
+                <span className="flex h-8 flex-1 items-center">
+                  {JSON.stringify(props.state[entry])}
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </details>
   )
 }
 
@@ -189,9 +214,9 @@ type HtnLogsSectionProps = {
 
 function HtnLogsSection(props: HtnLogsSectionProps) {
   return (
-    <section>
-      <span>Logs</span>
-      <div className="mt-1 border border-neutral-500 p-3">
+    <details className="border border-neutral-400 p-6" open={false}>
+      <summary className="cursor-pointer uppercase text-white">Logs</summary>
+      <div className="mt-3">
         {props.logs?.slice(-1 * 3).map((log: any, index: number) => {
           return (
             <div key={`log-${index}`}>
@@ -202,6 +227,6 @@ function HtnLogsSection(props: HtnLogsSectionProps) {
           )
         })}
       </div>
-    </section>
+    </details>
   )
 }
