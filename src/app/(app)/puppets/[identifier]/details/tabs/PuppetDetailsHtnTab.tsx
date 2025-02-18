@@ -9,7 +9,7 @@ import type { StatusLevel } from '@/ui/components/StatusDot'
 import type { PuppetDTO } from '../../../logic'
 
 type PuppetDetailsHtnTabProps = {
-  puppet: PuppetDTO
+  puppet: PuppetDTO | null
 }
 
 export default function PuppetDetailsHtnTab(props: PuppetDetailsHtnTabProps) {
@@ -18,35 +18,39 @@ export default function PuppetDetailsHtnTab(props: PuppetDetailsHtnTabProps) {
   const [plan, setPlan] = useState<any[]>([])
   const [logs, setLogs] = useState<any[]>([])
 
-  const { readyState: wsState } = useWebSocket(props.puppet.ws_url, {
-    // onOpen: () => {
-    //   console.log('WebSocket connection established.')
-    // },
-    onMessage: (e) => {
-      const message = JSON.parse(e.data.toString())
+  // TODO: Move this up to puppet page level?
+  const { readyState: wsState } = useWebSocket(
+    props.puppet?.ws_url || 'wss://',
+    {
+      // onOpen: () => {
+      //   console.log('WebSocket connection established.')
+      // },
+      onMessage: (e) => {
+        const message = JSON.parse(e.data.toString())
 
-      switch (message.data.identifier) {
-        case 'puppetState':
-          setState((prevState: any) => {
-            return {
-              ...prevState,
-              ...message.data.state,
-            }
-          })
-          break
-        case 'puppetGoals':
-          setGoals(message.data.goals)
-          break
-        case 'puppetPlan':
-          setPlan(message.data.plan)
-          break
-      }
+        switch (message.data.identifier) {
+          case 'puppetState':
+            setState((prevState: any) => {
+              return {
+                ...prevState,
+                ...message.data.state,
+              }
+            })
+            break
+          case 'puppetGoals':
+            setGoals(message.data.goals)
+            break
+          case 'puppetPlan':
+            setPlan(message.data.plan)
+            break
+        }
 
-      setLogs((prevLogs: any) => {
-        return [...prevLogs, message]
-      })
+        setLogs((prevLogs: any) => {
+          return [...prevLogs, message]
+        })
+      },
     },
-  })
+  )
 
   return (
     <>

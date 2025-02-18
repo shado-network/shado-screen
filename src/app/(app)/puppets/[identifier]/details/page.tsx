@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import PuppetDetailsHtnTab from './tabs/PuppetDetailsHtnTab'
+
+import PuppetDetailsTabs from './tabs/PuppetDetailsTabs'
 import { getPuppetByIdentifier } from '../../logic'
 
 export const metadata: Metadata = {
@@ -12,17 +13,16 @@ type PuppetDetailsProps = {
 
 export default async function PuppetDetails({ params }: PuppetDetailsProps) {
   const puppetIdentifier = (await params).identifier
-
   const puppet = await getPuppetByIdentifier(puppetIdentifier)
 
   return (
     <section className="container mx-auto p-12">
       <h1 className="text-xl font-semibold uppercase text-white">
-        Puppet / {puppet.identifier || '...'}
+        Puppet / {puppet?.identifier || '...'}
       </h1>
       <p className="text-neutral-400">Insights into a shado-puppet instance.</p>
-      {/* TODO: Tabs */}
-      <PuppetDetailsHtnTab puppet={puppet} />
+
+      <PuppetDetailsTabs puppet={puppet} />
     </section>
   )
 }

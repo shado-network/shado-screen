@@ -42,7 +42,7 @@ export const getPuppetByIdentifier = async (
 
     const puppet = puppetData.toJSON()
 
-    return puppet
+    return puppet as PuppetDTO
   } catch (error) {
     console.log('Error in getPuppetByIdentifier', error)
 
