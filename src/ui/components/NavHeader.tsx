@@ -24,7 +24,7 @@ export default function NavHeader() {
             <RiAppsLine />
           </div>
           <div className="flex flex-col">
-            <span className="text-shadow shadow-glow group-hover:text-shadow-none font-semibold uppercase leading-tight text-primary transition group-hover:text-white group-hover:shadow-white">
+            <span className="font-semibold uppercase leading-tight text-primary shadow-glow transition text-shadow group-hover:text-white group-hover:shadow-white group-hover:text-shadow-none">
               Shadō Screen
             </span>
             <span className="text-xs leading-tight text-neutral-500 transition group-hover:text-neutral-400">
@@ -41,7 +41,7 @@ export default function NavHeader() {
           className={conditionalClassNames({
             'flex items-center gap-2': true,
             'uppercase text-neutral-400 transition hover:text-white': true,
-            'text-primary': pathName === '/puppets',
+            'text-primary': pathName.startsWith('/puppets'),
           })}
         >
           <RiGroupLine title="Puppets" />
@@ -52,7 +52,7 @@ export default function NavHeader() {
           className={conditionalClassNames({
             'flex items-center gap-2': true,
             'uppercase text-neutral-400 transition hover:text-white': true,
-            'text-primary': pathName === '/plays',
+            'text-primary': pathName.startsWith('/plays'),
           })}
         >
           <RiExchange2Line title="Plays" />
@@ -67,7 +67,7 @@ export default function NavHeader() {
           className={conditionalClassNames({
             'flex h-6 w-6 items-center justify-center': true,
             'uppercase text-neutral-400 transition hover:text-white': true,
-            'text-primary': pathName === '/settings',
+            'text-primary': pathName.startsWith('/settings'),
           })}
         >
           <RiSettings3Line title="Settings" />

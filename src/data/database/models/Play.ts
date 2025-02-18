@@ -19,12 +19,17 @@ const Play = db.define(
       unique: true,
       allowNull: false,
     },
-    url: {
+    key: {
       type: DataTypes.TEXT,
       unique: true,
       allowNull: false,
     },
-    key: {
+    http_url: {
+      type: DataTypes.TEXT,
+      unique: true,
+      allowNull: false,
+    },
+    ws_url: {
       type: DataTypes.TEXT,
       unique: true,
       allowNull: false,

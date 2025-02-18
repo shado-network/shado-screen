@@ -31,6 +31,7 @@ import {
   removePuppetConnection,
 } from '../logic'
 import type { PuppetDTO, RemovePuppetConnectionDTO } from '../logic'
+import Link from 'next/link'
 
 type PuppetDataCellProps = {
   puppet: PuppetDTO
@@ -47,25 +48,29 @@ export function PuppetDataCell(props: PuppetDataCellProps) {
   }
 
   return (
-    <div className="flex gap-3">
-      <div>
-        <Avatar
-          name={
-            queries.puppetData.data?.data?.puppet.name ||
-            props.puppet.identifier
-          }
-          src={queries.puppetData.data?.data?.puppet.image}
-        />
+    <Link href={`/puppets/${props.puppet.identifier}/details`}>
+      <div className="flex gap-3">
+        <div>
+          <Avatar
+            name={
+              queries.puppetData.data?.data?.puppet.name ||
+              props.puppet.identifier
+            }
+            src={queries.puppetData.data?.data?.puppet.image}
+          />
+        </div>
+        <div className="flex flex-col">
+          <span className="text-md text-white">
+            {queries.puppetData.data?.data?.puppet.name ||
+              props.puppet.identifier}
+          </span>
+          <span className="text-sm text-neutral-500">
+            {props.puppet.http_url}
+          </span>
+          {/* <span>{puppet.key}</span> */}
+        </div>
       </div>
-      <div className="flex flex-col">
-        <span className="text-md text-white">
-          {queries.puppetData.data?.data?.puppet.name ||
-            props.puppet.identifier}
-        </span>
-        <span className="text-sm text-neutral-500">{props.puppet.url}</span>
-        {/* <span>{puppet.key}</span> */}
-      </div>
-    </div>
+    </Link>
   )
 }
 
@@ -81,6 +86,7 @@ export function PuppetStatusCell(props: PuppetStatusCellProps) {
       // enabled: true,
       // placeholderData: keepPreviousData,
       //
+      refetchOnMount: 'always',
       // NOTE: Check every minute.
       refetchInterval: 1 * 60 * 1000,
     }),

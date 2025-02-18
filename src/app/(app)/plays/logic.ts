@@ -3,7 +3,12 @@
 import { Play } from '@/data/database/models'
 
 // TODO: Refactor?!
-export type PlayDTO = { identifier: string; url: string; key: string }
+export type PlayDTO = {
+  identifier: string
+  key: string
+  http_url: string
+  ws_url: string
+}
 
 export const getPlays = async () => {
   try {

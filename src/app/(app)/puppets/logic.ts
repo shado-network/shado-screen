@@ -3,7 +3,12 @@
 import { Puppet } from '@/data/database/models'
 
 // TODO: Refactor?!
-export type PuppetDTO = { identifier: string; url: string; key: string }
+export type PuppetDTO = {
+  identifier: string
+  key: string
+  http_url: string
+  ws_url: string
+}
 
 export const getPuppets = async () => {
   try {
@@ -15,6 +20,31 @@ export const getPuppets = async () => {
     return puppets
   } catch (error) {
     console.log('Error in getPuppets', error)
+
+    // TODO: Proper return value.
+    return null
+  }
+}
+
+export const getPuppetByIdentifier = async (
+  identifier: PuppetDTO['identifier'],
+) => {
+  try {
+    const puppetData = await Puppet.findOne({
+      where: {
+        identifier: identifier,
+      },
+    })
+
+    if (!puppetData) {
+      throw `No puppet found for identifier ${identifier}`
+    }
+
+    const puppet = puppetData.toJSON()
+
+    return puppet
+  } catch (error) {
+    console.log('Error in getPuppetByIdentifier', error)
 
     // TODO: Proper return value.
     return null
@@ -62,7 +92,7 @@ export const removePuppetConnection = async (
 
 export const getPuppetHealth = async (puppet: PuppetDTO) => {
   try {
-    const url = `${puppet.url}/ping`
+    const url = `${puppet.http_url}/ping`
 
     const response = await fetch(url, {
       method: 'GET',
@@ -94,7 +124,7 @@ export const getPuppetHealth = async (puppet: PuppetDTO) => {
 
 export const getPuppetData = async (puppet: PuppetDTO) => {
   try {
-    const url = `${puppet.url}/puppet`
+    const url = `${puppet.http_url}/puppet`
 
     const response = await fetch(url, {
       method: 'GET',

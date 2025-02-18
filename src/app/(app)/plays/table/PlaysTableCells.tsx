@@ -59,7 +59,7 @@ export function PlayDataCell(props: PlayDataCellProps) {
         <span className="text-md text-white">
           {queries.playData.data?.data?.play.name || props.play.identifier}
         </span>
-        <span className="text-sm text-neutral-500">{props.play.url}</span>
+        <span className="text-sm text-neutral-500">{props.play.http_url}</span>
         {/* <span>{play.key}</span> */}
       </div>
     </div>
@@ -79,6 +79,7 @@ export function PlayStatusCell(props: PlayStatusCellProps) {
       // enabled: true,
       // placeholderData: keepPreviousData,
       //
+      refetchOnMount: 'always',
       // NOTE: Check every minute.
       refetchInterval: 1 * 60 * 1000,
     }),

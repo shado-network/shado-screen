@@ -85,19 +85,7 @@ export default function AddPuppetModal() {
                     //
                     labelPlacement="outside"
                     //
-                    errorMessage="Please enter a valid puppet identifier."
-                  />
-
-                  <Input
-                    name="url"
-                    type="text"
-                    label="URL"
-                    placeholder="https://"
-                    isRequired
-                    //
-                    labelPlacement="outside"
-                    //
-                    errorMessage="Please enter a valid puppet url."
+                    errorMessage="Please enter a valid shado-puppet identifier"
                   />
 
                   <Input
@@ -109,7 +97,31 @@ export default function AddPuppetModal() {
                     //
                     labelPlacement="outside"
                     //
-                    errorMessage="Please enter a valid puppet auth key."
+                    errorMessage="Please enter a valid shado-puppet auth key"
+                  />
+
+                  <Input
+                    name="http_url"
+                    type="text"
+                    label="HTTP URL"
+                    placeholder="https://"
+                    isRequired
+                    //
+                    labelPlacement="outside"
+                    //
+                    errorMessage="Please enter a valid shado-puppet HTTP URL"
+                  />
+
+                  <Input
+                    name="ws_url"
+                    type="text"
+                    label="WebSocket URL"
+                    placeholder="wss://"
+                    isRequired
+                    //
+                    labelPlacement="outside"
+                    //
+                    errorMessage="Please enter a valid shado-puppet WebSocket URL"
                   />
                 </ModalBody>
                 <ModalFooter>

@@ -1,3 +1,4 @@
 echo "scripts/SEED"
 
-tsc && node --loader ts-node/esm src/data/database/seed.ts
+# tsc && node --loader ts-node/esm src/data/database/seed.ts
+node --loader ts-node/esm src/data/database/seed.ts

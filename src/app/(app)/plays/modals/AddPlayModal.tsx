@@ -85,19 +85,7 @@ export default function AddPlayModal() {
                     //
                     labelPlacement="outside"
                     //
-                    errorMessage="Please enter a valid play identifier."
-                  />
-
-                  <Input
-                    name="url"
-                    type="text"
-                    label="URL"
-                    placeholder="https://"
-                    isRequired
-                    //
-                    labelPlacement="outside"
-                    //
-                    errorMessage="Please enter a valid play url."
+                    errorMessage="Please enter a valid shado-play identifier"
                   />
 
                   <Input
@@ -109,7 +97,31 @@ export default function AddPlayModal() {
                     //
                     labelPlacement="outside"
                     //
-                    errorMessage="Please enter a valid play auth key."
+                    errorMessage="Please enter a valid shado-play auth key"
+                  />
+
+                  <Input
+                    name="http_url"
+                    type="text"
+                    label="HTTP URL"
+                    placeholder="https://"
+                    isRequired
+                    //
+                    labelPlacement="outside"
+                    //
+                    errorMessage="Please enter a valid shado-play HTTP URL"
+                  />
+
+                  <Input
+                    name="ws_url"
+                    type="text"
+                    label="WebSocket URL"
+                    placeholder="wss://"
+                    isRequired
+                    //
+                    labelPlacement="outside"
+                    //
+                    errorMessage="Please enter a valid shado-play WebSocket URL"
                   />
                 </ModalBody>
                 <ModalFooter>
