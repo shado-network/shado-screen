@@ -1,5 +1,6 @@
 {
   "name": "shado-screen",
+  "displayName": "Shadō Screen",
   "version": "0.1.0",
   "private": true,
   "type": "module",
