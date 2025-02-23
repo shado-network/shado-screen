@@ -10,7 +10,7 @@ import {
   RiSettings3Line,
 } from 'react-icons/ri'
 
-import conditionalClassNames from '@/libs/conditionalClassNames'
+import cn from '@/utils/cn'
 
 export default function NavHeader() {
   const pathName = usePathname()
@@ -38,7 +38,7 @@ export default function NavHeader() {
       <section className="flex flex-1 items-center gap-x-12 px-9">
         <Link
           href="/puppets"
-          className={conditionalClassNames({
+          className={cn({
             'flex items-center gap-2': true,
             'uppercase text-neutral-400 transition hover:text-white': true,
             'text-primary': pathName.startsWith('/puppets'),
@@ -49,7 +49,7 @@ export default function NavHeader() {
         </Link>
         <Link
           href="/plays"
-          className={conditionalClassNames({
+          className={cn({
             'flex items-center gap-2': true,
             'uppercase text-neutral-400 transition hover:text-white': true,
             'text-primary': pathName.startsWith('/plays'),
@@ -64,7 +64,7 @@ export default function NavHeader() {
       <section className="flex aspect-square items-center border-l-1 border-neutral-900 px-6">
         <Link
           href="/settings"
-          className={conditionalClassNames({
+          className={cn({
             'flex h-6 w-6 items-center justify-center': true,
             'uppercase text-neutral-400 transition hover:text-white': true,
             'text-primary': pathName.startsWith('/settings'),

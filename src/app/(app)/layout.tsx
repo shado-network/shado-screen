@@ -1,4 +1,4 @@
-import NavHeader from '@/ui/components/NavHeader'
+import NavHeader from '@/components/NavHeader'
 
 type AppLayoutProps = Readonly<{
   children: React.ReactNode

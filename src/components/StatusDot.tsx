@@ -1,4 +1,4 @@
-import conditionalClassNames from '@/libs/conditionalClassNames'
+import cn from '@/utils/cn'
 
 export type StatusLevel = 'POSITIVE' | 'NEUTRAL' | 'NEGATIVE' | 'UNDETERMINED'
 
@@ -11,7 +11,7 @@ export default function StatusDot(props: StatusDotProps) {
   return (
     <div className="flex h-8 w-8 items-center justify-center">
       <div
-        className={conditionalClassNames({
+        className={cn({
           'h-3 w-3 rounded-full': true,
           'bg-green-500': props.status === 'POSITIVE',
           'bg-orange-500': props.status === 'NEUTRAL',

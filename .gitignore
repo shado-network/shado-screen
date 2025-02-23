@@ -40,9 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# custom
-.vscode/
-
 ###
 
 _TMP/

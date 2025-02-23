@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 
-import StatusDot from '@/ui/components/StatusDot'
-import type { StatusLevel } from '@/ui/components/StatusDot'
+import StatusDot from '@/components/StatusDot'
+import type { StatusLevel } from '@/components/StatusDot'
 
 import type { PuppetDTO } from '../../../logic'
 

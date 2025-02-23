@@ -3,8 +3,8 @@
 import { useCallback } from 'react'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
-import BaseTable from '@/ui/components/BaseTable'
-import type { BaseTableColumn } from '@/ui/components/BaseTable'
+import BaseTable from '@/components/BaseTable'
+import type { BaseTableColumn } from '@/components/BaseTable'
 
 import {
   PlayActionsCell,
