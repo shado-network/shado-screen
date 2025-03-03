@@ -13,6 +13,8 @@ try {
 }
 
 // NOTE: Add initial data.
+
+// NOTE: Puppets
 try {
   await Puppet.create({
     identifier: 'good',
@@ -20,19 +22,40 @@ try {
     http_url: 'http://localhost:10101',
     ws_url: 'ws://localhost:10102',
   })
+} catch (error) {
+  console.error('Error while adding data', error)
+}
 
+try {
   await Puppet.create({
     identifier: 'evil',
     key: 'sp-evil',
     http_url: 'http://localhost:10111',
     ws_url: 'ws://localhost:10112',
   })
+} catch (error) {
+  console.error('Error while adding data', error)
+}
 
+try {
   await Puppet.create({
     identifier: 'omnipotent',
     key: 'sp-omnipotent',
     http_url: 'http://localhost:11001',
     ws_url: 'ws://localhost:11002',
+  })
+} catch (error) {
+  console.error('Error while adding data', error)
+}
+
+// NOTE: Plays.
+
+try {
+  await Play.create({
+    identifier: 'bardo',
+    key: 'sp-bardo',
+    http_url: 'http://localhost:10001',
+    ws_url: 'ws://localhost:10002',
   })
 } catch (error) {
   console.error('Error while adding data', error)
