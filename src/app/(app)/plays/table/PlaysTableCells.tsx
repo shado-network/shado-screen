@@ -1,11 +1,12 @@
 'use client'
 
+import type { Key } from 'react'
 import {
   keepPreviousData,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
-import type { Key } from 'react'
+import Link from 'next/link'
 
 import { Avatar, Button, Chip } from '@heroui/react'
 import type { ChipProps } from '@heroui/react'
@@ -25,11 +26,7 @@ import {
   RiPencilLine,
 } from 'react-icons/ri'
 
-import {
-  // getPlayData,
-  // getPlayHealth,
-  removePlayConnection,
-} from '../logic'
+import { getPlayData, getPlayHealth, removePlayConnection } from '../logic'
 import type { PlayDTO, RemovePlayConnectionDTO } from '../logic'
 
 type PlayDataCellProps = {
@@ -40,8 +37,7 @@ export function PlayDataCell(props: PlayDataCellProps) {
   const queries = {
     playData: useQuery({
       queryKey: ['play', props.play.identifier, 'data'],
-      queryFn: () => ({}) as any,
-      // queryFn: () => getPlayData(props.play),
+      queryFn: () => getPlayData(props.play),
       // enabled: true,
       // placeholderData: keepPreviousData,
     }),
@@ -74,8 +70,7 @@ export function PlayStatusCell(props: PlayStatusCellProps) {
   const queries = {
     playHealth: useQuery({
       queryKey: ['play', props.play.identifier, 'health'],
-      queryFn: () => ({}) as any,
-      // queryFn: () => getPlayHealth(props.play),
+      queryFn: () => getPlayHealth(props.play),
       // enabled: true,
       // placeholderData: keepPreviousData,
       //

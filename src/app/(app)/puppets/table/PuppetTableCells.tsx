@@ -1,11 +1,12 @@
 'use client'
 
+import type { Key } from 'react'
 import {
   keepPreviousData,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
-import type { Key } from 'react'
+import Link from 'next/link'
 
 import { Avatar, Button, Chip } from '@heroui/react'
 import type { ChipProps } from '@heroui/react'
@@ -31,7 +32,6 @@ import {
   removePuppetConnection,
 } from '../logic'
 import type { PuppetDTO, RemovePuppetConnectionDTO } from '../logic'
-import Link from 'next/link'
 
 type PuppetDataCellProps = {
   puppet: PuppetDTO
